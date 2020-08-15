@@ -45,16 +45,16 @@
             console.log('Image URL: ' + profile.getImageUrl());
             console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
-            var header = $('<div/>');
-            header.append($('<div/>').html("Id: " + profile.getId()));
-            header.append($('<br/>'));
-            header.append($('<div/>').html("Name: " + profile.getName()));
-            header.append($('<br/>'));
-            header.append($('<div/>').html("Email: " + profile.getEmail()));
-            header.append($('<br/>'));
-            header.append($('<div/>').html('<img src="' + profile.getImageUrl() + '" alt="Ad Image Preview" height="200" width="200">'));
+            var data = $('<div/>');
+            data.append($('<div/>').html("Id: " + profile.getId()));
+            data.append($('<br/>'));
+            data.append($('<div/>').html("Name: " + profile.getName()));
+            data.append($('<br/>'));
+            data.append($('<div/>').html("Email: " + profile.getEmail()));
+            data.append($('<br/>'));
+            data.append($('<div/>').html('<img src="' + profile.getImageUrl() + '" alt="Ad Image Preview" height="200" width="200">'));
             // Appending the header to the table 
-            $("#data").html(header);
+            $("#data").html(data);
 
             // hide login and show logout
             $("#btn-login").hide();
