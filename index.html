@@ -21,7 +21,7 @@
     </ol>
     <br>
     <div id="btn-login" class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a id="btn-logout" href="#" onclick="signOut();">Sign out</a>
+    <a id="btn-logout" href="#" hidden onclick="signOut();">Sign out</a>
     <br />
     <div id="data" align="center"></div>
     <br /><br /><br /><br />
@@ -38,7 +38,6 @@
                 console.log('User signed out.');
             });
         }
-
         function onSignIn(googleUser) {
             profile = googleUser.getBasicProfile();
             console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -48,9 +47,12 @@
 
             var header = $('<div/>');
             header.append($('<div/>').html("Id: " + profile.getId()));
+            header.append($('<br/>'));
             header.append($('<div/>').html("Name: " + profile.getName()));
+            header.append($('<br/>'));
             header.append($('<div/>').html("Email: " + profile.getEmail()));
-            header.append($('<div/>').html('<img src="' + profile.getImageUrl() + '" alt="Ad Image Preview" height="300" width="300">'));
+            header.append($('<br/>'));
+            header.append($('<div/>').html('<img src="' + profile.getImageUrl() + '" alt="Ad Image Preview" height="200" width="200">'));
             // Appending the header to the table 
             $("#data").append(header);
 
