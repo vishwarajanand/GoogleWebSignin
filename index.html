@@ -54,7 +54,7 @@
             header.append($('<br/>'));
             header.append($('<div/>').html('<img src="' + profile.getImageUrl() + '" alt="Ad Image Preview" height="200" width="200">'));
             // Appending the header to the table 
-            $("#data").append(header);
+            $("#data").html(header);
 
             // hide login and show logout
             $("#btn-login").hide();
