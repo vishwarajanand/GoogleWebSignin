@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Google Signin Demo</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id"
+        content="805202499191-cki2odmeua6pvoi1tdku2asdkldpntch.apps.googleusercontent.com">
+</head>
+
+<body>
+    <b>Notes:</b>
+
+    <ol>
+        <li> This is a demo for Google Signin in websites.
+        </li>
+        <li> Source is hosted at <a
+                hreh="https://github.com/vishwarajanand/GoogleWebSignin">https://github.com/vishwarajanand/GoogleWebSignin</a>
+        </li>
+    </ol>
+    <br>
+    <div id="btn-login" class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a id="btn-logout" href="#" onclick="signOut();">Sign out</a>
+    <br />
+    <div id="data" align="center"></div>
+    <br /><br /><br /><br />
+
+    <script>
+        var profile = null;
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                // show login and hide logout
+                $("#btn-login").show();
+                $("#btn-logout").hide();
+                $("#data").html("User logged off");
+                console.log('User signed out.');
+            });
+        }
+
+        function onSignIn(googleUser) {
+            profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+            $("#data").html("User details: ");
+            var header = $('<ul/>');
+            header.append($('<li/>').html("Id: " + profile.getId()));
+            header.append($('<li/>').html("Name: " + profile.getName()));
+            header.append($('<li/>').html("Email: " + profile.getEmail()));
+            header.append($('<li/>').html('<img src="' + profile.getImageUrl() + '" alt="Ad Image Preview" height="300" width="300">'));
+            // Appending the header to the table 
+            $(selector).append(header);
+
+            // hide login and show logout
+            $("#btn-login").hide();
+            $("#btn-logout").show();
+        }
+    </script>
+</body>
+
+</html>
