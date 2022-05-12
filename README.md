@@ -19,5 +19,5 @@ Hosted on Github Pages:
 
 # Blog
 
-Blog is published at: https://vishwarajanand.com/business/released-google-signin-website/
+Blog is published at: https://vishwarajanand.com/tech/released-google-signin-website/
 
