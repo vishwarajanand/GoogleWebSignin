@@ -40,6 +40,9 @@
         }
         function onSignIn(googleUser) {
             profile = googleUser.getBasicProfile();
+            // PRINTS the ID verification part for auth
+            // USE this ID token to get an access_token from google auth by using a SCOPE
+            console.table(googleUser.getAuthResponse());
             console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
             console.log('Name: ' + profile.getName());
             console.log('Image URL: ' + profile.getImageUrl());
