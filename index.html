@@ -3,65 +3,75 @@
 
 <head>
     <title>Google Signin Demo</title>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"> </script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id"
-        content="805202499191-cki2odmeua6pvoi1tdku2asdkldpntch.apps.googleusercontent.com">
+            content="805202499191-cki2odmeua6pvoi1tdku2asdkldpntch.apps.googleusercontent.com">
+    <script src="https://accounts.google.com/gsi/client"
+            async></script>
+
 </head>
 
 <body>
     <b>Notes:</b>
+    <div id="g_id_onload"
+         data-client_id="805202499191-cki2odmeua6pvoi1tdku2asdkldpntch.apps.googleusercontent.com"
+         data-callback="onSignIn">
+    </div>
+
+    <div class="g_id_signin"
+         data-type="standard"></div>
 
     <ol>
         <li> This is a demo for Google Signin in websites.
+        </li>
+        <li> If not able to login, add yourself to Test Users on <a
+               href="https://console.cloud.google.com/apis/credentials/consent">this
+                link</a>
         </li>
         <li> Source is hosted at <a
                 href="https://github.com/vishwarajanand/GoogleWebSignin">https://github.com/vishwarajanand/GoogleWebSignin</a>
         </li>
     </ol>
     <br>
-    <div id="btn-login" class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a id="btn-logout" style="float:right;" href="#" hidden onclick="signOut();">Sign out</a>
     <br />
     <div id="data"></div>
     <br /><br /><br /><br />
 
     <script>
         var profile = null;
-        function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                // show login and hide logout
-                $("#btn-login").show();
-                $("#btn-logout").hide();
-                $("#data").html("User logged off");
-                console.log('User signed out.');
-            });
+        // custom function just to parse JWT in JS
+        // https://stackoverflow.com/a/38552302/3991696
+        function parseJwt(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
         }
+
         function onSignIn(googleUser) {
-            profile = googleUser.getBasicProfile();
+            profile = parseJwt(googleUser.credential);
             // PRINTS the ID verification part for auth
             // USE this ID token to get an access_token from google auth by using a SCOPE
-            console.table(googleUser.getAuthResponse());
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            console.log(googleUser.credential);
+            console.log('ID: ' + profile.sub); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.name);
+            console.log('Image URL: ' + profile.picture);
+            console.log('Email: ' + profile.email);
 
             var data = $('<div/>');
-            data.append($('<div/>').html("Id: " + profile.getId()));
+            data.append($('<div/>').html("Id: " + profile.sub));
             data.append($('<br/>'));
-            data.append($('<div/>').html("Name: " + profile.getName()));
+            data.append($('<div/>').html("Name: " + profile.name));
             data.append($('<br/>'));
-            data.append($('<div/>').html("Email: " + profile.getEmail()));
+            data.append($('<div/>').html("Email: " + profile.email));
             data.append($('<br/>'));
-            data.append($('<div/>').html('<img src="' + profile.getImageUrl() + '" alt="Ad Image Preview" height="200" width="200">'));
-            // Appending the header to the table 
+            data.append($('<div/>').html('<img src="' + profile.picture + '" alt="Ad Image Preview" height="200" width="200">'));
+            // Appending the header to the table
             $("#data").html(data);
-
-            // hide login and show logout
-            $("#btn-login").hide();
-            $("#btn-logout").show();
         }
     </script>
 </body>

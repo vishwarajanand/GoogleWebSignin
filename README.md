@@ -11,7 +11,7 @@ Website to show Google Web Signin demo
 ![Signin](https://raw.githubusercontent.com/vishwarajanand/GoogleWebSignin/master/demo/2-signin.png?raw=true "Signin")
 
 ## Signout page
-![Signout](https://raw.githubusercontent.com/vishwarajanand/GoogleWebSignin/master/demo/3-signout.png?raw=true "Signout")
+Signout is no longer needed, it should be automatically handled on page refresh or by application backend as per designed.
 
 # Demo
 Hosted on Github Pages:
